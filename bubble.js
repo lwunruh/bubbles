@@ -1,6 +1,6 @@
 class Bubble {
   constructor(minRadius, maxRadius) {
-    this.pos = createVector(random(50, width - 50), random(50, height - 50));
+    this.pos = createVector(random(2*maxRadius, width - 2*maxRadius), random(2*maxRadius, height - 2*maxRadius));
     this.vel = p5.Vector.random2D();
     this.rad = floor(random(minRadius, maxRadius));
 
