@@ -27,6 +27,10 @@ class Bubble {
     }
 
     this.collide(neighbours);
+    //TODO: Fix the edges bug by checking if new pos is outside the bounds, then subtracting/adding the difference
+    //resolveEdges is still broken
+    
+    this.resolveEdges();
     this.pos.add(this.vel);
 
     this.vel.setMag(this.maxSpeed);
@@ -55,12 +59,36 @@ class Bubble {
         this.vel.x -= ax;
         this.vel.y -= ay;
         other.vel.x += ax;
+        other.vel.y += ay;
       }
     }
   }
 
+  //
+  //The +1's and -1's have to be in here, or else all the
+  //bubbles disappear.
+  //No clue why
+  //
+  resolveEdges(){
+    if (this.pos.x + this.rad > width) {
+      this.pos.x = width-this.rad - 1;
+    }
+    if (this.pos.x - this.rad < 0) {
+      this.pos.x = this.rad + 1;
+
+    }
+    if (this.pos.y + this.rad > height) {
+      this.pos.y = height-this.rad - 1;
+
+    }
+    if (this.pos.y - this.rad < 0) {
+      this.pos.y = this.rad + 1;
+
+    }
+  }
+
   edges() {
-    if (this.pos.x + this.rad >= width) {
+    if (this.pos.x + this.rad > width) {
       this.vel.x *= -1;
       return true;
     }
