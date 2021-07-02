@@ -1,9 +1,10 @@
 let bubbles;
-const population = 100;
+let population = 50;
 const minRadius = 10;
 const maxRadius = 25;
 
 let showTree = false;
+let popSlider;
 
 function setup() {
   createCanvas(windowWidth, windowHeight-50);
@@ -14,8 +15,23 @@ function setup() {
   treeCheck.position();
   
   let resetButton = createButton("Reset");
-  resetButton.mouseClicked(resetSketch);
+  resetButton.mouseClicked(resetSketchButton);
   resetButton.position(100, height);
+
+  popSlider = createSlider(1, 500, 50);
+  popSlider.position(15, height - 25)
+  popSlider.changed(changePop);
+}
+
+function changePop(){
+  population = popSlider.value();
+  resetSketch();
+}
+
+function resetSketchButton() {
+  population = 50;
+  popSlider.value(50);
+  resetSketch();
 }
 
 function resetSketch() {
@@ -28,6 +44,10 @@ function resetSketch() {
 function draw() {
   clear();
   background("rgb(16, 16, 16)");
+  textSize(20);
+  stroke("white");
+  fill("white");
+  text(popSlider.value() + " bubbles", popSlider.x + popSlider.width+10, height-5);
 
   bubbleTree = new QuadTree(new Rectangle(width/2, height/2, width, height), 1);
   for(let b of bubbles){
